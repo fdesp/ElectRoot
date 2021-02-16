@@ -40,7 +40,7 @@ public:
   /** @brief Status associated to nodes that have not received any message */
   static const Status IDLE;
   /** @brief Status associated to nodes waiting for a message */
-  static const Status ACTIVE;
+  //static const Status ACTIVE;
   /** @brief Status associated to nodes unactive nodes */
   static const Status SLEEP;
   /** @brief Status associated to nodes processing data */
