@@ -61,6 +61,9 @@ void ElectRoot::handleMessage(omnetpp::cMessage* recvMsg){
                 status = Status::WAITING;
             }
         } else if(recvMsg->getKind() == MsgKind::SATURATION){
+            for (int i = 0; i < neighborhoodSize - 1; i++)
+                waitingList.push_front(i);
+            waitingList.push_front(neighborhoodSize - 1); 
             waitingList.remove(recvMsg->getArrivalGate()->getIndex());
             if(waitingList.size() == 1){
                 becomeProcessing();
