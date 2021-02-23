@@ -71,7 +71,7 @@ void ElectRoot::handleMessage(omnetpp::cMessage* recvMsg){
             }
         }
         else
-            omnetpp::cRuntimeError("Invalid event for status initiator\n");
+            omnetpp::cRuntimeError("Invalid event for status idle\n");
     }
     else if (status == Status::WAITING){
         if (recvMsg->getKind() == MsgKind::SATURATION){ // A3
