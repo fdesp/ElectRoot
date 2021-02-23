@@ -1,5 +1,199 @@
 E # 0 t 0 m 1 ce -1 msg -1
-SB v 1286 rid Tree-0-20210216-09:58:29-1474 b 1000
+SB v 1286 rid Tree-0-20210216-16:20:50-3243 b 1000
 KF p -1 c "" s ""
 MC id 1 c omnetpp::cModule t dsbase.simulations.Tree n Tree cm 1
 MS id 1 d ""
+MC id 2 c ElectRoot t dsbase.ElectRoot pid 1 n node[0]
+MS id 2 d i=device/laptop
+MC id 3 c ElectRoot t dsbase.ElectRoot pid 1 n node[1]
+MS id 3 d i=device/laptop
+MC id 4 c ElectRoot t dsbase.ElectRoot pid 1 n node[2]
+MS id 4 d i=device/laptop
+MC id 5 c ElectRoot t dsbase.ElectRoot pid 1 n node[3]
+MS id 5 d i=device/laptop
+MC id 6 c ElectRoot t dsbase.ElectRoot pid 1 n node[4]
+MS id 6 d i=device/laptop
+MC id 7 c ElectRoot t dsbase.ElectRoot pid 1 n node[5]
+MS id 7 d i=device/laptop
+MC id 8 c ElectRoot t dsbase.ElectRoot pid 1 n node[6]
+MS id 8 d i=device/laptop
+MC id 9 c ElectRoot t dsbase.ElectRoot pid 1 n node[7]
+MS id 9 d i=device/laptop
+MC id 10 c ElectRoot t dsbase.ElectRoot pid 1 n node[8]
+MS id 10 d i=device/laptop
+MC id 11 c ElectRoot t dsbase.ElectRoot pid 1 n node[9]
+MS id 11 d i=device/laptop
+MC id 12 c ElectRoot t dsbase.ElectRoot pid 1 n node[10]
+MS id 12 d i=device/laptop
+MC id 13 c ElectRoot t dsbase.ElectRoot pid 1 n node[11]
+MS id 13 d i=device/laptop
+MC id 14 c ElectRoot t dsbase.ElectRoot pid 1 n node[12]
+MS id 14 d i=device/laptop
+MC id 15 c ElectRoot t dsbase.ElectRoot pid 1 n node[13]
+MS id 15 d i=device/laptop
+GC m 2 g 1048576 n port$i i 0 o 0
+GC m 2 g 1572864 n port$o i 0 o 1
+GC m 10 g 1048576 n port$i i 0 o 0
+GC m 10 g 1572864 n port$o i 0 o 1
+CC sm 2 sg 1572864 dm 10 dg 1048576
+CS sm 2 sg 1572864 d ""
+CC sm 10 sg 1572864 dm 2 dg 1048576
+CS sm 10 sg 1572864 d ""
+GC m 3 g 1048576 n port$i i 0 o 0
+GC m 3 g 1572864 n port$o i 0 o 1
+GC m 10 g 1048577 n port$i i 1 o 0
+GC m 10 g 1572865 n port$o i 1 o 1
+CC sm 3 sg 1572864 dm 10 dg 1048577
+CS sm 3 sg 1572864 d ""
+CC sm 10 sg 1572865 dm 3 dg 1048576
+CS sm 10 sg 1572865 d ""
+GC m 4 g 1048576 n port$i i 0 o 0
+GC m 4 g 1572864 n port$o i 0 o 1
+GC m 11 g 1048576 n port$i i 0 o 0
+GC m 11 g 1572864 n port$o i 0 o 1
+CC sm 4 sg 1572864 dm 11 dg 1048576
+CS sm 4 sg 1572864 d ""
+CC sm 11 sg 1572864 dm 4 dg 1048576
+CS sm 11 sg 1572864 d ""
+GC m 5 g 1048576 n port$i i 0 o 0
+GC m 5 g 1572864 n port$o i 0 o 1
+GC m 11 g 1048577 n port$i i 1 o 0
+GC m 11 g 1572865 n port$o i 1 o 1
+CC sm 5 sg 1572864 dm 11 dg 1048577
+CS sm 5 sg 1572864 d ""
+CC sm 11 sg 1572865 dm 5 dg 1048576
+CS sm 11 sg 1572865 d ""
+GC m 6 g 1048576 n port$i i 0 o 0
+GC m 6 g 1572864 n port$o i 0 o 1
+GC m 12 g 1048576 n port$i i 0 o 0
+GC m 12 g 1572864 n port$o i 0 o 1
+CC sm 6 sg 1572864 dm 12 dg 1048576
+CS sm 6 sg 1572864 d ""
+CC sm 12 sg 1572864 dm 6 dg 1048576
+CS sm 12 sg 1572864 d ""
+GC m 7 g 1048576 n port$i i 0 o 0
+GC m 7 g 1572864 n port$o i 0 o 1
+GC m 12 g 1048577 n port$i i 1 o 0
+GC m 12 g 1572865 n port$o i 1 o 1
+CC sm 7 sg 1572864 dm 12 dg 1048577
+CS sm 7 sg 1572864 d ""
+CC sm 12 sg 1572865 dm 7 dg 1048576
+CS sm 12 sg 1572865 d ""
+GC m 8 g 1048576 n port$i i 0 o 0
+GC m 8 g 1572864 n port$o i 0 o 1
+GC m 13 g 1048576 n port$i i 0 o 0
+GC m 13 g 1572864 n port$o i 0 o 1
+CC sm 8 sg 1572864 dm 13 dg 1048576
+CS sm 8 sg 1572864 d ""
+CC sm 13 sg 1572864 dm 8 dg 1048576
+CS sm 13 sg 1572864 d ""
+GC m 9 g 1048576 n port$i i 0 o 0
+GC m 9 g 1572864 n port$o i 0 o 1
+GC m 13 g 1048577 n port$i i 1 o 0
+GC m 13 g 1572865 n port$o i 1 o 1
+CC sm 9 sg 1572864 dm 13 dg 1048577
+CS sm 9 sg 1572864 d ""
+CC sm 13 sg 1572865 dm 9 dg 1048576
+CS sm 13 sg 1572865 d ""
+GC m 10 g 1048578 n port$i i 2 o 0
+GC m 10 g 1572866 n port$o i 2 o 1
+GC m 14 g 1048576 n port$i i 0 o 0
+GC m 14 g 1572864 n port$o i 0 o 1
+CC sm 10 sg 1572866 dm 14 dg 1048576
+CS sm 10 sg 1572866 d ""
+CC sm 14 sg 1572864 dm 10 dg 1048578
+CS sm 14 sg 1572864 d ""
+GC m 11 g 1048578 n port$i i 2 o 0
+GC m 11 g 1572866 n port$o i 2 o 1
+GC m 14 g 1048577 n port$i i 1 o 0
+GC m 14 g 1572865 n port$o i 1 o 1
+CC sm 11 sg 1572866 dm 14 dg 1048577
+CS sm 11 sg 1572866 d ""
+CC sm 14 sg 1572865 dm 11 dg 1048578
+CS sm 14 sg 1572865 d ""
+GC m 12 g 1048578 n port$i i 2 o 0
+GC m 12 g 1572866 n port$o i 2 o 1
+GC m 15 g 1048576 n port$i i 0 o 0
+GC m 15 g 1572864 n port$o i 0 o 1
+CC sm 12 sg 1572866 dm 15 dg 1048576
+CS sm 12 sg 1572866 d ""
+CC sm 15 sg 1572864 dm 12 dg 1048578
+CS sm 15 sg 1572864 d ""
+GC m 13 g 1048578 n port$i i 2 o 0
+GC m 13 g 1572866 n port$o i 2 o 1
+GC m 15 g 1048577 n port$i i 1 o 0
+GC m 15 g 1572865 n port$o i 1 o 1
+CC sm 13 sg 1572866 dm 15 dg 1048577
+CS sm 13 sg 1572866 d ""
+CC sm 15 sg 1572865 dm 13 dg 1048578
+CS sm 15 sg 1572865 d ""
+GC m 14 g 1048578 n port$i i 2 o 0
+GC m 14 g 1572866 n port$o i 2 o 1
+GC m 15 g 1048578 n port$i i 2 o 0
+GC m 15 g 1572866 n port$o i 2 o 1
+CC sm 14 sg 1572866 dm 15 dg 1048578
+CS sm 14 sg 1572866 d ""
+CC sm 15 sg 1572866 dm 14 dg 1048578
+CS sm 15 sg 1572866 d ""
+MB sm 1 tm 2 m initialize(0)
+CM id 0 tid 0 eid 0 etid 0 c omnetpp::cMessage n timer k 8 pe -1
+BS id 0 tid 0 eid 0 etid 0 c omnetpp::cMessage n timer k 8 pe 0
+ES t 0
+ME
+MB sm 1 tm 3 m initialize(0)
+CM id 1 tid 1 eid 1 etid 1 c omnetpp::cMessage n timer k 8 pe -1
+BS id 1 tid 1 eid 1 etid 1 c omnetpp::cMessage n timer k 8 pe 0
+ES t 0
+ME
+MB sm 1 tm 4 m initialize(0)
+ME
+MB sm 1 tm 5 m initialize(0)
+ME
+MB sm 1 tm 6 m initialize(0)
+ME
+MB sm 1 tm 7 m initialize(0)
+ME
+MB sm 1 tm 8 m initialize(0)
+ME
+MB sm 1 tm 9 m initialize(0)
+ME
+MB sm 1 tm 10 m initialize(0)
+ME
+MB sm 1 tm 11 m initialize(0)
+ME
+MB sm 1 tm 12 m initialize(0)
+ME
+MB sm 1 tm 13 m initialize(0)
+ME
+MB sm 1 tm 14 m initialize(0)
+ME
+MB sm 1 tm 15 m initialize(0)
+ME
+MS id 2 d t=INITIATOR;i=device/laptop
+MS id 2 d t=INITIATOR,,red;i=device/laptop
+MS id 3 d t=INITIATOR;i=device/laptop
+MS id 3 d t=INITIATOR,,red;i=device/laptop
+MS id 4 d t=IDLE;i=device/laptop
+MS id 4 d t=IDLE,,red;i=device/laptop
+MS id 5 d t=IDLE;i=device/laptop
+MS id 5 d t=IDLE,,red;i=device/laptop
+MS id 6 d t=IDLE;i=device/laptop
+MS id 6 d t=IDLE,,red;i=device/laptop
+MS id 7 d t=IDLE;i=device/laptop
+MS id 7 d t=IDLE,,red;i=device/laptop
+MS id 8 d t=IDLE;i=device/laptop
+MS id 8 d t=IDLE,,red;i=device/laptop
+MS id 9 d t=IDLE;i=device/laptop
+MS id 9 d t=IDLE,,red;i=device/laptop
+MS id 10 d t=IDLE;i=device/laptop
+MS id 10 d t=IDLE,,red;i=device/laptop
+MS id 11 d t=IDLE;i=device/laptop
+MS id 11 d t=IDLE,,red;i=device/laptop
+MS id 12 d t=IDLE;i=device/laptop
+MS id 12 d t=IDLE,,red;i=device/laptop
+MS id 13 d t=IDLE;i=device/laptop
+MS id 13 d t=IDLE,,red;i=device/laptop
+MS id 14 d t=IDLE;i=device/laptop
+MS id 14 d t=IDLE,,red;i=device/laptop
+MS id 15 d t=IDLE;i=device/laptop
+MS id 15 d t=IDLE,,red;i=device/laptop

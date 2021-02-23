@@ -38,8 +38,11 @@ protected:
 
 protected:
    
-    /** @brief Updates the simulation canvas according to the execution **/
-    //virtual void refreshDisplay() const override;
+    /** @brief  **/
+    virtual void becomeProcessing();
+
+    /** @brief Prints the node starts in the simulation canvas */
+    virtual void refreshDisplay() const override;
 
 public:
     ElectRoot();

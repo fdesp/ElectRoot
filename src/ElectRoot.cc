@@ -25,20 +25,19 @@ ElectRoot::ElectRoot()
 
 void ElectRoot::initialize(){
     if(par("initiator").boolValue()){
+        timer = new omnetpp::cMessage("timer", MsgKind::TIMER);
         scheduleAt(par("startTime"), timer);
         status = Status::INITIATOR;
     }
     else
         status = Status::IDLE;
     neighborhoodSize = gateSize("port$o");
+    id = getIndex();
 }
 
 void ElectRoot::handleMessage(omnetpp::cMessage* recvMsg){
     if (status == Status::INITIATOR){
         if (recvMsg->getKind() == MsgKind::TIMER){ // A1
-            //auto electRootMsg = dynamic_cast<ElectRootMsg*>(recvMsg);
-            id = getIndex();
-            neighborhoodSize = gateSize("port$o");
             auto wakeupMsg = new ElectRootMsg("activate", MsgKind::ACTIVATION);
             wakeupMsg->setId(id);
             for (int i = 0; i < neighborhoodSize - 1; i++){
@@ -49,61 +48,48 @@ void ElectRoot::handleMessage(omnetpp::cMessage* recvMsg){
             waitingList.push_front(neighborhoodSize - 1);
 
             if(waitingList.size() == 1){
-                parent = waitingList.front();
-                waitingList.pop_front();
-                auto saturationMsg = new ElectRootMsg("saturation", MsgKind::SATURATION);
-                saturationMsg->setId(id);
-                send(saturationMsg, "port$o", parent);
-                status = Status::PROCESSING;
+                becomeProcessing();
             }
             else
-                status = Status::ACTIVE;
-        }
+                status = Status::WAITING;
+            }	
         else
             omnetpp::cRuntimeError("Invalid event for status initiator\n");
+        delete recvMsg;
     }
     else if (status == Status::IDLE){
+            for (int i = 0; i < neighborhoodSize - 1; i++){
+                waitingList.push_front(i);
+            }
+            waitingList.push_front(neighborhoodSize - 1);
         if (recvMsg->getKind() == MsgKind::ACTIVATION){ // A2
-           // auto electRootMsg = dynamic_cast<ElectRootMsg*>(recvMsg);
-            int sender = recvMsg->getArrivalGate()->getIndex();
-            int lastNeighbor = neighborhoodSize - 1;
-            for (int i = 0; i < lastNeighbor; i++)
-            {
-                if(i != sender){
-                    send(recvMsg->dup(), "port$o", i);
-                    waitingList.push_front(i);
-                }	
-            }
-            if(lastNeighbor != sender){
-                send(recvMsg, "port$o", lastNeighbor);
-                waitingList.push_front(lastNeighbor);
-            }
             if(waitingList.size() == 1){
-                parent = waitingList.front();
-                waitingList.pop_front();
-                auto saturationMsg = new ElectRootMsg("saturation", MsgKind::SATURATION);
-                saturationMsg->setId(id);
-                send(saturationMsg, "port$o", parent);
-                status = Status::PROCESSING;
+                becomeProcessing();
+                delete(recvMsg);
+            }else{
+                localFlooding(recvMsg);
+                status = Status::WAITING;
             }
-            else
-                status = Status::ACTIVE;        }
+        }else if(recvMsg->getKind() == MsgKind::SATURATION){
+            waitingList.remove(recvMsg->getArrivalGate()->getIndex());
+            if(waitingList.size() == 1){
+                becomeProcessing();
+                delete(recvMsg);
+            }else{
+                localFlooding(recvMsg);
+                status = Status::WAITING;
+            }
+        }
         else
             omnetpp::cRuntimeError("Invalid event for status idle\n");
     }
-    else if (status == Status::ACTIVE){
+    else if (status == Status::WAITING){
         if (recvMsg->getKind() == MsgKind::SATURATION){ // A3
-            auto electRootMsg = dynamic_cast<ElectRootMsg*>(recvMsg);
-            waitingList.remove(electRootMsg->getId());
+            waitingList.remove(recvMsg->getArrivalGate()->getIndex());
             if(waitingList.size() == 1){
-                parent = waitingList.front();
-                waitingList.pop_front();
-                auto saturationMsg = new ElectRootMsg("saturation", MsgKind::SATURATION);
-                saturationMsg->setId(id);
-                send(saturationMsg, "port$o", parent);
-                status = Status::PROCESSING;
+                becomeProcessing();
+                delete(recvMsg);
             }
-             delete recvMsg;
         }
         else
             omnetpp::cRuntimeError("Invalid event for status active\n");
@@ -134,25 +120,45 @@ void ElectRoot::handleMessage(omnetpp::cMessage* recvMsg){
         if (recvMsg->getKind() == MsgKind::ELECTION){ // A5
             auto electRootMsg = dynamic_cast<ElectRootMsg*>(recvMsg);
             if(id < electRootMsg->getId()){
+                for (int i = 0; i < neighborhoodSize; i++){
+                    if(i != parent){
+                        auto termMsg = new ElectRootMsg("term", MsgKind::TERMINATION);
+                        termMsg->setId(id);
+                        send(termMsg, "port$o", i);
+                    }
+                }
                 status = Status::LEADER;
-                for (int i = 0; i < neighborhoodSize; i++){
-                    if(i != parent){
-                            auto termMsg = new ElectRootMsg("term", MsgKind::TERMINATION);
-                            termMsg->setId(id);
-                            send(termMsg, "port$o", i);
-                    }
-                }
             }else{
-                status = Status::FOLLOWER;
                 for (int i = 0; i < neighborhoodSize; i++){
                     if(i != parent){
-                            auto termMsg = new ElectRootMsg("term", MsgKind::TERMINATION);
-                            termMsg->setId(electRootMsg->getId());
-                            send(termMsg, "port$o", i);
+                        auto termMsg = new ElectRootMsg("term", MsgKind::TERMINATION);
+                        termMsg->setId(electRootMsg->getId());
+                        send(termMsg, "port$o", i);
                     }
                 }
+                status = Status::FOLLOWER;
             }
             delete recvMsg;
         }
     }
+}
+
+
+void ElectRoot::becomeProcessing(){  
+    parent = waitingList.front();
+    waitingList.pop_front();
+    auto saturationMsg = new ElectRootMsg("saturation", MsgKind::SATURATION);
+    saturationMsg->setId(id);
+    send(saturationMsg, "port$o", parent);
+    status = Status::PROCESSING;
+}
+
+
+void ElectRoot::refreshDisplay() const{
+    std::string info = status.str();
+    getDisplayString().setTagArg("t", 0, info.c_str());
+    /*if(status == Status::LEADER){
+        getDisplayString().setTagArg("t", 2, "red");//
+    }*/
+
 }

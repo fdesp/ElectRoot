@@ -53,6 +53,8 @@ public:
   static const Status FOLLOWER;
   /** @brief Status associated to nodes that do not have any actions to do */
   static const Status DONE;
+    /** @brief Status associated to nodes that are wating*/
+  static const Status WAITING;
   /** @brief Default constructor */
   Status() : status(-1) { }
   /** @brief Overloaded constructor taking values from the static variables 
@@ -78,7 +80,8 @@ public:
     case 5:  return "LEADER";     
     case 6:  return "FOLLOWER";     
     case 7:  return "SATURATED";     
-    case 8:  return "PROCESSING";     
+    case 8:  return "PROCESSING";  
+    case 9:  return "WAITING";      
     default: return "UNDEFINED";
     }
   }
