@@ -27,16 +27,14 @@ void ElectRoot::initialize(){
     if(par("initiator").boolValue()){
         timer = new omnetpp::cMessage("timer", MsgKind::TIMER);
         scheduleAt(par("startTime"), timer);
-        status = Status::INITIATOR;
     }
-    else
-        status = Status::IDLE;
+    status = Status::IDLE;
     neighborhoodSize = gateSize("port$o");
     id = getIndex();
 }
 
 void ElectRoot::handleMessage(omnetpp::cMessage* recvMsg){
-    if (status == Status::INITIATOR){
+    if (status == Status::IDLE){
         if (recvMsg->getKind() == MsgKind::TIMER){ // A1
             auto wakeupMsg = new ElectRootMsg("activate", MsgKind::ACTIVATION);
             wakeupMsg->setId(id);
@@ -47,22 +45,14 @@ void ElectRoot::handleMessage(omnetpp::cMessage* recvMsg){
             send(wakeupMsg, "port$o", neighborhoodSize - 1);
             waitingList.push_front(neighborhoodSize - 1);
 
-            if(waitingList.size() == 1){
+            if(waitingList.size() == 1)
                 becomeProcessing();
-            }
             else
                 status = Status::WAITING;
-            }	
-        else
-            omnetpp::cRuntimeError("Invalid event for status initiator\n");
-        delete recvMsg;
-    }
-    else if (status == Status::IDLE){
-            for (int i = 0; i < neighborhoodSize - 1; i++){
+        } else if (recvMsg->getKind() == MsgKind::ACTIVATION){ // A2
+            for (int i = 0; i < neighborhoodSize - 1; i++)
                 waitingList.push_front(i);
-            }
-            waitingList.push_front(neighborhoodSize - 1);
-        if (recvMsg->getKind() == MsgKind::ACTIVATION){ // A2
+            waitingList.push_front(neighborhoodSize - 1); 
             if(waitingList.size() == 1){
                 becomeProcessing();
                 delete(recvMsg);
@@ -70,7 +60,7 @@ void ElectRoot::handleMessage(omnetpp::cMessage* recvMsg){
                 localFlooding(recvMsg);
                 status = Status::WAITING;
             }
-        }else if(recvMsg->getKind() == MsgKind::SATURATION){
+        } else if(recvMsg->getKind() == MsgKind::SATURATION){
             waitingList.remove(recvMsg->getArrivalGate()->getIndex());
             if(waitingList.size() == 1){
                 becomeProcessing();
@@ -81,7 +71,7 @@ void ElectRoot::handleMessage(omnetpp::cMessage* recvMsg){
             }
         }
         else
-            omnetpp::cRuntimeError("Invalid event for status idle\n");
+            omnetpp::cRuntimeError("Invalid event for status initiator\n");
     }
     else if (status == Status::WAITING){
         if (recvMsg->getKind() == MsgKind::SATURATION){ // A3
@@ -157,8 +147,7 @@ void ElectRoot::becomeProcessing(){
 void ElectRoot::refreshDisplay() const{
     std::string info = status.str();
     getDisplayString().setTagArg("t", 0, info.c_str());
-    /*if(status == Status::LEADER){
-        getDisplayString().setTagArg("t", 2, "red");//
-    }*/
-
+    if(info == "LEADER"){
+        getDisplayString().setTagArg("t", 2, "red");
+    }
 }
